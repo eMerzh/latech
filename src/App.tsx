@@ -1,19 +1,23 @@
 import { useMemo, useState } from "react";
+import "maplibre-gl/dist/maplibre-gl.css";
 import "./App.css";
 
-import MapGl, { Source, Layer, Popup } from "react-map-gl/maplibre";
-import navigationIcon from "/navigation.svg";
-import "maplibre-gl/dist/maplibre-gl.css";
 import { point } from "@turf/turf";
-import { Entity, VehiclePosition } from "gtfs-types";
+import { Entity } from "gtfs-types";
+import MapGl, { Source, Layer } from "react-map-gl/maplibre";
+import navigationIcon from "/navigation.svg";
+import { VehiculeInfo, VehiculeInfoPopup } from "./VehiculeInfo";
 import { fetchFeed } from "./feed";
+import { routes } from "./routes";
 
 const url = `https://gtfsrt.tectime.be/proto/RealTime/vehicles?key=${import.meta.env.VITE_GTFS_KEY}`;
 const mapURL = "https://api.maptiler.com/maps/bright/style.json?key=UVAKtN0Z84SNZiFO1wFP";
 
 function App() {
 	const [vehicles, setVehicles] = useState<Entity[]>([]);
-	const [popupEntity, setPopupEntity] = useState<VehiclePosition | null>(null);
+	const [popupEntityId, setPopupEntityId] = useState<string | null>(null);
+
+	const popupEntity = useMemo(() => vehicles.find((v) => v.id === popupEntityId)?.vehicle, [vehicles, popupEntityId]);
 
 	const onClick = async () => {
 		const result = await fetchFeed(url);
@@ -26,14 +30,14 @@ function App() {
 			features: vehicles.map((vehicle) =>
 				point([vehicle.vehicle?.position?.longitude || 0, vehicle.vehicle?.position?.latitude || 0], {
 					vehicle_id: vehicle.id,
+					route_short_name: routes[vehicle.vehicle?.trip?.route_id || ""]?.route_short_name || "--",
 					bearing: Number.parseInt(vehicle.vehicle?.position?.bearing || "0", 10),
 				}),
 			),
 		};
 	}, [vehicles]);
 
-	console.log("markers", vehiclesGeoJSON);
-
+	console.log("vehicles", vehicles, popupEntity);
 	return (
 		<>
 			<div>
@@ -51,7 +55,8 @@ function App() {
 						if (!e.features || e.features.length === 0) return;
 						const feature = e.features[0];
 						const entity = vehicles.find((v) => v.id === feature.properties?.vehicle_id);
-						if (entity?.vehicle) setPopupEntity(entity.vehicle);
+						console.log("entity", entity, feature.properties?.vehicle_id);
+						if (entity?.vehicle) setPopupEntityId(entity.id);
 					}}
 					onLoad={async (e) => {
 						const map = e.target;
@@ -68,7 +73,7 @@ function App() {
 							layout={{
 								"icon-image": "vehicle-icon",
 								"icon-size": 1.5,
-								"text-field": ["get", "vehicle_id"],
+								"text-field": ["get", "route_short_name"],
 								"icon-rotate": ["get", "bearing"],
 							}}
 							paint={{
@@ -76,21 +81,7 @@ function App() {
 							}}
 						/>
 					</Source>
-					{popupEntity && (
-						<Popup
-							className="popup"
-							longitude={popupEntity.position?.longitude || 0}
-							latitude={popupEntity.position?.latitude || 0}
-							anchor="bottom"
-							onClose={() => setPopupEntity(null)}
-						>
-							<div>
-								<p>ID: {popupEntity.vehicle?.id}</p>
-								<p>RouteID: {popupEntity.trip?.route_id}</p>
-								<p>Dir ID: {popupEntity.trip?.direction_id}</p>
-							</div>
-						</Popup>
-					)}
+					{popupEntity && <VehiculeInfoPopup entity={popupEntity} close={() => setPopupEntityId(null)} />}
 				</MapGl>
 			</div>
 
