@@ -6,7 +6,7 @@ interface SymbolType extends StyleImageInterface {
 
 // implementation of StyleImageInterface to draw a pulsing dot icon on the map
 // Search for StyleImageInterface in https://maplibre.org/maplibre-gl-js/docs/API/
-export const getVehiculeSymbol = (size: number, map: MapItem) => {
+export const getVehiculeSymbol = (size: number, map: MapItem, highlight: boolean) => {
 	const symbol: SymbolType = {
 		width: size,
 		height: size,
@@ -36,22 +36,23 @@ export const getVehiculeSymbol = (size: number, map: MapItem) => {
 			ctx.clearRect(0, 0, this.width, this.height);
 			// draw tip
 			ctx.beginPath();
-			ctx.fillStyle = "red";
+			ctx.fillStyle = highlight ? "#ff6464" : "#646464";
 			ctx.moveTo(center, size / 4);
 			ctx.lineTo(center - tipSize, center - tipSize);
 			ctx.lineTo(center + tipSize, center - tipSize);
 			ctx.fill();
 
 			// draw outer circle
-			ctx.beginPath();
-			ctx.arc(this.width / 2, this.height / 2, outerRadius, 0, Math.PI * 2);
-			ctx.fillStyle = `rgba(255, 200, 200,${1 - t})`;
-			ctx.fill();
-
+			if (highlight) {
+				ctx.beginPath();
+				ctx.arc(this.width / 2, this.height / 2, outerRadius, 0, Math.PI * 2);
+				ctx.fillStyle = `rgba(255, 200, 200,${1 - t})`;
+				ctx.fill();
+			}
 			// draw inner circle
 			ctx.beginPath();
 			ctx.arc(this.width / 2, this.height / 2, radius, 0, Math.PI * 2);
-			ctx.fillStyle = "#ff6464";
+			ctx.fillStyle = highlight ? "#ff6464" : "#646464";
 			ctx.strokeStyle = "white";
 			ctx.lineWidth = 2 + 4 * (1 - t);
 			ctx.fill();
@@ -61,7 +62,7 @@ export const getVehiculeSymbol = (size: number, map: MapItem) => {
 			this.data = ctx.getImageData(0, 0, this.width, this.height).data;
 
 			// continuously repaint the map, resulting in the smooth animation of the dot
-			map.triggerRepaint();
+			if (highlight) map.triggerRepaint();
 
 			// return `true` to let the map know that the image was updated
 			return true;
