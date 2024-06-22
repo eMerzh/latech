@@ -1,32 +1,38 @@
 {
-  "name": "tecfs",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "check:tsc": "tsc --noEmit",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@turf/turf": "7.0.0",
-    "gtfs-rt-bindings": "4.5.0",
-    "hyparquet": "^0.9.10",
-    "maplibre-gl": "4.4.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-map-gl": "7.1.7"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.8.1",
-    "@types/node": "20.14.2",
-    "@types/react": "18.2.66",
-    "@types/react-dom": "18.2.22",
-    "@vitejs/plugin-react-swc": "3.5.0",
-    "gtfs-types": "4.0.0",
-    "typescript": "5.2.2",
-    "vite": "5.2.0"
-  }
+	"name": "tecfs",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"check:tsc": "tsc --noEmit",
+		"build": "tsc && vite build",
+		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+		"preview": "vite preview",
+		"generate:gtfs": "gtfs-to-geojson && mv geojson/tec public/routes",
+		"generate:routes": "convert_route.ts GTFS/routes.txt src/routes.json public/routes"
+	},
+	"dependencies": {
+		"@turf/turf": "7.0.0",
+		"gtfs-rt-bindings": "4.5.0",
+		"hyparquet": "0.9.10",
+		"maplibre-gl": "4.4.0",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react-map-gl": "7.1.7"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.1",
+		"@types/bun": "1.1.4",
+		"@types/node": "20.14.2",
+		"@types/react": "18.2.66",
+		"@types/react-dom": "18.2.22",
+		"@vitejs/plugin-react-swc": "3.5.0",
+		"csv-simple-parser": "1.0.3",
+		"gtfs-to-geojson": "3.7.2",
+		"gtfs-types": "4.0.0",
+		"sanitize-filename": "1.6.3",
+		"typescript": "5.2.2",
+		"vite": "5.2.0"
+	}
 }

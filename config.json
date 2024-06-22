@@ -1,0 +1,16 @@
+{
+	"agencies": [
+		{
+			"agency_key": "tec",
+			"path": "/Users/bmaron/Downloads/TEC-GTFS/"
+		}
+	],
+	"bufferSizeMeters": 400,
+	"coordinatePrecision": 5,
+	"outputType": "route",
+	"outputFormat": "lines-and-stops",
+	"startDate": "20240616",
+	"endDate": "20240617",
+	"verbose": true,
+	"zipOutput": false
+}

@@ -17,7 +17,7 @@ export const getStops = async () => {
 	const result = new Promise<Stop[]>((resolve) => {
 		parquetRead({
 			file: arrayBuffer,
-			columns: ["stop_id", "stop_name", "stop_lat", "stop_lon"], // include columns
+			columns: ["stop_id", "stop_name", "stop_lat", "stop_lon", "route_id"], // include columns
 			onComplete: (data) => {
 				resolve(data as Stop[]);
 			},
