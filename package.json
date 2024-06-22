@@ -13,6 +13,10 @@
 		"generate:routes": "convert_route.ts GTFS/routes.txt src/routes.json public/routes"
 	},
 	"dependencies": {
+		"@mantine/core": "^7.10.2",
+		"@mantine/form": "^7.10.2",
+		"@mantine/hooks": "^7.10.2",
+		"@tabler/icons-react": "^3.6.0",
 		"@turf/turf": "7.0.0",
 		"gtfs-rt-bindings": "4.5.0",
 		"hyparquet": "0.9.10",
@@ -31,6 +35,9 @@
 		"csv-simple-parser": "1.0.3",
 		"gtfs-to-geojson": "3.7.2",
 		"gtfs-types": "4.0.0",
+		"postcss": "^8.4.38",
+		"postcss-preset-mantine": "^1.15.0",
+		"postcss-simple-vars": "^7.0.1",
 		"sanitize-filename": "1.6.3",
 		"typescript": "5.2.2",
 		"vite": "5.2.0"
