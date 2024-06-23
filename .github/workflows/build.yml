@@ -32,10 +32,10 @@ jobs:
             - run: ~/.cargo/bin/csv2parquet -c snappy gtfs/stops.txt public/stops.parquet
             - run: bun generate:geojson
             - run: bun generate:routes
+            - run: bun build:site
               env:
                 VITE_GTFS_KEY: "${{ secrets.VITE_GTFS_KEY }}"
                 VITE_MAP_KEY: "${{ secrets.VITE_MAP_KEY }}"
-            - run: bun build:site
             - name: Setup Pages
               uses: actions/configure-pages@v4
             - name: Upload artifact
