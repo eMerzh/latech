@@ -32,6 +32,7 @@ jobs:
               env:
                 VITE_GTFS_KEY: ${{ secrets.VITE_GTFS_KEY }}
                 VITE_MAP_KEY: ${{ secrets.VITE_MAP_KEY }}
+            - run: bun build
             - name: Setup Pages
               uses: actions/configure-pages@v4
             - name: Upload artifact
