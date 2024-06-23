@@ -11,7 +11,8 @@ export type Stop = [
 	number,
 ];
 export const getStops = async () => {
-	const res = await fetch("/stops.parquet");
+	const stopsUrl = new URL("/stops.parquet", import.meta.url).href;
+	const res = await fetch(stopsUrl);
 	const arrayBuffer = await res.arrayBuffer();
 
 	const result = new Promise<Stop[]>((resolve) => {

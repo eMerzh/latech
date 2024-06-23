@@ -10,7 +10,8 @@
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
 		"generate:geojson": "bunx gtfs-to-geojson && mv geojson/tec public/routes",
-		"generate:routes": "bun convert_route.ts gtfs/routes.txt src/routes.json public/routes"
+		"generate:routes": "bun convert_routes.ts gtfs/routes.txt src/routes.json public/routes",
+		"generate:stops": "bun convert_stops.ts gtfs/stops.txt public/stops.parquet"
 	},
 	"dependencies": {
 		"@mantine/core": "^7.10.2",

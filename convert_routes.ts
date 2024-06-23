@@ -3,27 +3,6 @@ import sanitize from "sanitize-filename";
 
 const inFile = Bun.file(process.argv.slice(2)[0]);
 const outSingleFile = Bun.file(process.argv.slice(2)[1]);
-const routeFolder = process.argv.slice(2)[2];
-
-async function attemptRead(row: Rec) {
-	const route_code_names: string[] = [];
-	const names = [`${row.agency_id}_${row.route_id}_0`, `${row.agency_id}_${row.route_id}_1`];
-	for (const name of names) {
-		const routeFile = Bun.file(`${routeFolder}/${sanitize(name)}.geojson`);
-		if (await routeFile.exists()) {
-			try {
-				const contents = await routeFile.json();
-				if (contents.features[0].properties.route_id === row.route_id) {
-					route_code_names.push(sanitize(name));
-				}
-			} catch (e) {
-				console.log("e", e);
-				console.log(`error reading ${routeFolder}/${sanitize(name)}.geojson`);
-			}
-		}
-	}
-	return route_code_names;
-}
 
 type Rec = {
 	route_id: string;

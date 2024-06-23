@@ -27,11 +27,14 @@ jobs:
             - run: bun check:tsc
             - run: wget https://opendata.tec-wl.be/Current%20GTFS/TEC-GTFS.zip
             - run: unzip -d gtfs TEC-GTFS.zip
+            - uses: cargo-bins/cargo-binstall@main
+            - run: cargo binstall --no-confirm csv2parquet
+            - run: ~/.cargo/bin/csv2parquet -c snappy gtfs/stops.txt public/stops.parquet
             - run: bun generate:geojson
             - run: bun generate:routes
               env:
-                VITE_GTFS_KEY: ${{ secrets.VITE_GTFS_KEY }}
-                VITE_MAP_KEY: ${{ secrets.VITE_MAP_KEY }}
+                VITE_GTFS_KEY: "${{ secrets.VITE_GTFS_KEY }}"
+                VITE_MAP_KEY: "${{ secrets.VITE_MAP_KEY }}"
             - run: bun build:site
             - name: Setup Pages
               uses: actions/configure-pages@v4
