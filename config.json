@@ -2,7 +2,7 @@
 	"agencies": [
 		{
 			"agency_key": "tec",
-			"path": "/Users/bmaron/Downloads/TEC-GTFS/"
+			"path": "./gtfs/"
 		}
 	],
 	"bufferSizeMeters": 400,

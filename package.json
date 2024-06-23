@@ -6,11 +6,11 @@
 	"scripts": {
 		"dev": "vite",
 		"check:tsc": "tsc --noEmit",
-		"build": "tsc && vite build",
+		"build": "vite build",
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
-		"generate:gtfs": "gtfs-to-geojson && mv geojson/tec public/routes",
-		"generate:routes": "convert_route.ts GTFS/routes.txt src/routes.json public/routes"
+		"generate:geojson": "bunx gtfs-to-geojson && mv geojson/tec public/routes",
+		"generate:routes": "bun convert_route.ts gtfs/routes.txt src/routes.json public/routes"
 	},
 	"dependencies": {
 		"@mantine/core": "^7.10.2",
@@ -33,7 +33,6 @@
 		"@types/react-dom": "18.2.22",
 		"@vitejs/plugin-react-swc": "3.5.0",
 		"csv-simple-parser": "1.0.3",
-		"gtfs-to-geojson": "3.7.2",
 		"gtfs-types": "4.0.0",
 		"postcss": "^8.4.38",
 		"postcss-preset-mantine": "^1.15.0",

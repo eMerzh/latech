@@ -2,6 +2,7 @@ import parse from "csv-simple-parser";
 import sanitize from "sanitize-filename";
 
 const inFile = Bun.file(process.argv.slice(2)[0]);
+const outSingleFile = Bun.file(process.argv.slice(2)[1]);
 const routeFolder = process.argv.slice(2)[2];
 
 async function attemptRead(row: Rec) {
@@ -41,5 +42,5 @@ for (const row of csv) {
 	row.route_short_name = `${row.route_short_name}`; // ensure string (some are numbers)
 	row.route_code_names = await attemptRead(row);
 }
-await Bun.write(process.argv.slice(2)[1], JSON.stringify(csv, null, 2));
+await Bun.write(outSingleFile, JSON.stringify(csv, null, 2));
 console.log(`written to "${process.argv.slice(2)[1]}" ✨`);
