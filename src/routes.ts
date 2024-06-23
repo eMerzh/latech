@@ -14,7 +14,6 @@ export const fetchRouteFeature = async (routeCode: string): Promise<GeoJSON.Feat
 		// biome-ignore lint/style/noNonNullAssertion: TS doesn't understand the Map.has check
 		return FeatureRoutes.get(routeCode)!;
 	}
-	console.log("fetching", `${import.meta.env.BASE_URL}/routes/${routeCode}.geojson`);
 	const resut = await fetch(`${import.meta.env.BASE_URL}/routes/${routeCode}.geojson`);
 	const data = await resut.json();
 	FeatureRoutes.set(routeCode, data);
