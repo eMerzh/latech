@@ -1,21 +1,49 @@
-import { Button, Switch, Tooltip, rem, useMantineTheme, useMatches } from "@mantine/core";
+import { Button, Switch, Text, Tooltip, rem, useMantineTheme, useMatches } from "@mantine/core";
 import { useInterval } from "@mantine/hooks";
 import { IconPlayerPauseFilled, IconRefresh, IconReload } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
 
 const NavFetcher = ({ fetch }: { fetch: () => void }) => {
 	const theme = useMantineTheme();
 
-	const { start, stop, active } = useInterval(fetch, 25000);
+	const [seconds, setSeconds] = useState(0);
+	const refreshData = () => {
+		setSeconds(0);
+		fetch();
+	};
+	const { start, stop, active } = useInterval(refreshData, 25000);
+	const { start: startSeconds } = useInterval(() => setSeconds((s) => s + 1), 1000);
+	useEffect(() => {
+		startSeconds();
+	}, [startSeconds]);
+
+	const interval = new Date(0);
+	interval.setSeconds(seconds);
 	const refreshLabel = useMatches({
 		base: "",
-		sm: "auto refresh",
+		sm: (
+			<>
+				auto refresh
+				<br />
+				<Text c="gray.5" fz="xs">
+					since {interval.toISOString().substring(11, 19)}
+				</Text>
+			</>
+		),
 	});
 	return (
 		<>
 			<Tooltip label="Automatically refresh positions" refProp="rootRef">
 				<Switch
 					checked={active}
-					onChange={(event) => (event.currentTarget.checked ? start() : stop())}
+					onChange={(event) => {
+						if (event.currentTarget.checked) {
+							if (seconds > 25) refreshData();
+							start();
+						} else {
+							stop();
+						}
+					}}
 					color="tecYellow"
 					size="md"
 					label={refreshLabel}
@@ -33,7 +61,7 @@ const NavFetcher = ({ fetch }: { fetch: () => void }) => {
 				/>
 			</Tooltip>
 			<Button
-				onClick={fetch}
+				onClick={refreshData}
 				variant="filled"
 				rightSection={<IconRefresh size={14} />}
 				mr="md"

@@ -54,7 +54,7 @@ export const getVehiculeSymbol = (size: number, map: MapItem, highlight: boolean
 			ctx.arc(this.width / 2, this.height / 2, radius, 0, Math.PI * 2);
 			ctx.fillStyle = highlight ? "#ff6464" : "#646464";
 			ctx.strokeStyle = "white";
-			ctx.lineWidth = 2 + 4 * (1 - t);
+			ctx.lineWidth = 2 + 4 * (highlight ? 1 - t : 1);
 			ctx.fill();
 			ctx.stroke();
 

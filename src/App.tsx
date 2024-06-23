@@ -109,7 +109,7 @@ function App() {
 					stops={stops}
 					setSelectedVehicleId={(id, routeId) => {
 						setSelectedVehicleId(id);
-						selectRoute(routeId ? routes[routeId || ""] || null : null);
+						if (routeId) selectRoute(routes[routeId || ""] || null);
 					}}
 					vehicles={vehicles}
 				/>
