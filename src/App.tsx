@@ -42,6 +42,18 @@ function App() {
 	const fetchPositions = async () => {
 		const result = await fetchFeed(url);
 		setVehicles(result || []);
+
+		// If a vehicle is selected, center the map on it
+		if (selectedVehicleId) {
+			const vehicle = (result || []).find((v) => v.id === selectedVehicleId);
+			if (vehicle?.vehicle) {
+				const x = vehicle.vehicle.position?.longitude;
+				const y = vehicle.vehicle.position?.latitude;
+				if (x && y) {
+					mapRef.current?.flyTo({ center: [x, y] });
+				}
+			}
+		}
 	};
 
 	const selectRoute = async (route: RouteItem | null) => {
