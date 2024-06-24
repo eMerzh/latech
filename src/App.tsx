@@ -113,18 +113,26 @@ function App() {
 				<RoutesList routes={Object.values(routes)} selectRoute={selectRoute} selectedRoute={selectedRoute} />
 			</AppShell.Navbar>
 			<AppShell.Main>
-				<VehiculeMap
-					mapRef={mapRef}
-					routeJson={routeJson}
-					selectedRoute={selectedRoute}
-					selectedVehicle={selectedVehicle}
-					stops={stops}
-					setSelectedVehicleId={(id, routeId) => {
-						setSelectedVehicleId(id);
-						if (routeId) selectRoute(routes[routeId || ""] || null);
+				<div
+					style={{
+						display: "flex",
+						flexDirection: "row",
+						marginBottom: "1rem",
 					}}
-					vehicles={vehicles}
-				/>
+				>
+					<VehiculeMap
+						mapRef={mapRef}
+						routeJson={routeJson}
+						selectedRoute={selectedRoute}
+						selectedVehicle={selectedVehicle}
+						stops={stops}
+						setSelectedVehicleId={(id, routeId) => {
+							setSelectedVehicleId(id);
+							if (routeId) selectRoute(routes[routeId || ""] || null);
+						}}
+						vehicles={vehicles}
+					/>
+				</div>
 			</AppShell.Main>
 		</AppShell>
 	);
