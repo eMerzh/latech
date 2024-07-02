@@ -143,7 +143,6 @@ function App() {
 					{routeJson && (
 						<RouteDetails
 							routeJson={routeJson}
-							selectedVehicle={selectedVehicle}
 							vehicules={vehicles
 								.filter((v) => v.vehicle?.trip?.route_id === selectedRoute?.route_id)
 								.map((v) => v.vehicle)
