@@ -19,18 +19,6 @@ const NavFetcher = ({ fetch }: { fetch: () => void }) => {
 
 	const interval = new Date(0);
 	interval.setSeconds(seconds);
-	const refreshLabel = useMatches({
-		base: "",
-		sm: (
-			<>
-				auto refresh
-				<br />
-				<Text c="gray.5" fz="xs">
-					since {interval.toISOString().substring(11, 19)}
-				</Text>
-			</>
-		),
-	});
 	return (
 		<>
 			<Tooltip label="Automatically refresh positions" refProp="rootRef">
@@ -46,7 +34,15 @@ const NavFetcher = ({ fetch }: { fetch: () => void }) => {
 					}}
 					color="tecYellow"
 					size="md"
-					label={refreshLabel}
+					label={
+						<>
+							auto refresh
+							<br />
+							<Text c="gray.5" fz="xs">
+								since {interval.toISOString().substring(11, 19)}
+							</Text>
+						</>
+					}
 					thumbIcon={
 						active ? (
 							<IconReload style={{ width: rem(12), height: rem(12) }} color={theme.colors.tecYellow[6]} stroke={3} />

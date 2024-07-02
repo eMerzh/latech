@@ -18,11 +18,19 @@ import { bbox } from "@turf/turf";
 import { Entity } from "gtfs-types";
 import { MapRef } from "react-map-gl/maplibre";
 import NavFetcher from "./NavFetcher";
+import RouteDetails from "./RouteDetails";
 import RoutesList from "./RoutesList";
 import VehiculeMap from "./VehiculeMap";
 import { fetchFeed } from "./feed";
 import { useFetchSingleRoute, useFetchStops } from "./fetchHooks";
 import { RouteItem, fetchRouteFeature, routes } from "./routes";
+
+type Maybe<T> = T | null | undefined;
+type Truthy<T> = T extends Maybe<false | "" | 0> ? never : T;
+
+export function truthy<T>(value: T): value is Truthy<T> {
+	return Boolean(value);
+}
 
 const url = `https://gtfsrt.tectime.be/proto/RealTime/vehicles?key=${import.meta.env.VITE_GTFS_KEY}`;
 
@@ -132,6 +140,16 @@ function App() {
 						}}
 						vehicles={vehicles}
 					/>
+					{routeJson && (
+						<RouteDetails
+							routeJson={routeJson}
+							selectedVehicle={selectedVehicle}
+							vehicules={vehicles
+								.filter((v) => v.vehicle?.trip?.route_id === selectedRoute?.route_id)
+								.map((v) => v.vehicle)
+								.filter(truthy)}
+						/>
+					)}
 				</div>
 			</AppShell.Main>
 		</AppShell>

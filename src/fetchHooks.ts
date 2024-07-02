@@ -15,8 +15,9 @@ export const useFetchStops = () => {
 	return stops;
 };
 
-export const useFetchSingleRoute = (selectedRouteCodeName: string | null) => {
-	const [routeJson, setRouteJson] = useState<GeoJSON.FeatureCollection | null>(null);
+export type RouteJson = GeoJSON.FeatureCollection | null;
+export const useFetchSingleRoute = (selectedRouteCodeName: string | null): RouteJson => {
+	const [routeJson, setRouteJson] = useState<RouteJson>(null);
 
 	useEffect(() => {
 		const fetchRoute = async (id: string) => {
