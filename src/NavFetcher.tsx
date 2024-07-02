@@ -1,4 +1,4 @@
-import { Button, Switch, Text, Tooltip, rem, useMantineTheme, useMatches } from "@mantine/core";
+import { Button, Switch, Text, Tooltip, rem, useMantineTheme } from "@mantine/core";
 import { useInterval } from "@mantine/hooks";
 import { IconPlayerPauseFilled, IconRefresh, IconReload } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
