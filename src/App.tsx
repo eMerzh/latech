@@ -32,7 +32,8 @@ export function truthy<T>(value: T): value is Truthy<T> {
 	return Boolean(value);
 }
 
-const url = `https://gtfsrt.tectime.be/proto/RealTime/vehicles?key=${import.meta.env.VITE_GTFS_KEY}`;
+// const url = `https://gtfsrt.tectime.be/proto/RealTime/vehicles?key=${import.meta.env.VITE_GTFS_KEY}`;
+const url = "https://bmaron.net/gtfs.php";
 
 function App() {
 	const mapRef = useRef<MapRef>(null);

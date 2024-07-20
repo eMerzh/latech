@@ -11,8 +11,14 @@ const NavFetcher = ({ fetch }: { fetch: () => void }) => {
 		setSeconds(0);
 		fetch();
 	};
-	const { start, stop, active } = useInterval(refreshData, 25000);
+	const { start, stop, active } = useInterval(refreshData, 10000);
 	const { start: startSeconds } = useInterval(() => setSeconds((s) => s + 1), 1000);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: only need to start on mount
+	useEffect(() => {
+		refreshData();
+		start();
+	}, []);
+
 	useEffect(() => {
 		startSeconds();
 	}, [startSeconds]);
