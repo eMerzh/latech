@@ -30,6 +30,7 @@ jobs:
             - uses: cargo-bins/cargo-binstall@main
             - run: cargo binstall --no-confirm csv2parquet
             - run: ~/.cargo/bin/csv2parquet -c snappy gtfs/stops.txt public/stops.parquet
+            - run: cp src/routes.json public/routes.json
             - run: bun generate:geojson
             - run: bun generate:routes
             - run: bun build:site

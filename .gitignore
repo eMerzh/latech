@@ -22,3 +22,6 @@ public/routes
 *.njsproj
 *.sln
 *.sw?
+
+routes.json
+gtfs/*
