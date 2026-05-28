@@ -36,7 +36,7 @@
 		"csv-simple-parser": "1.0.3",
 		"gtfs-to-geojson": "3.7.6",
 		"gtfs-types": "4.0.0",
-		"postcss": "^8.4.38",
+		"postcss": "^8.5.10",
 		"postcss-preset-mantine": "^1.15.0",
 		"postcss-simple-vars": "^7.0.1",
 		"sanitize-filename": "1.6.3",
